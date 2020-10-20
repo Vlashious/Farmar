@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="World" type="Node"]
+
+[node name="Ground" type="TileMap" parent="."]
+format = 1
+
+[node name="Plants" type="TileMap" parent="."]
+format = 1
