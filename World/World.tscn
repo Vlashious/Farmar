@@ -1,9 +1,26 @@
-[gd_scene format=2]
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://TileSet/PlantSet.tres" type="TileSet" id=1]
+[ext_resource path="res://TileSet/Ground.tres" type="TileSet" id=2]
 
 [node name="World" type="Node"]
 
 [node name="Ground" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 8 )
 format = 1
+tile_data = PoolIntArray( -65537, 0, 0, -131072, 0, 0, -131071, 0, 0, -131070, 0, 0, -1, 0, 0, -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Plants" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 8 )
+centered_textures = true
 format = 1
+__meta__ = {
+"_edit_group_": true
+}
