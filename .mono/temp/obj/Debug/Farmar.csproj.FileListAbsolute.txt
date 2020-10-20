@@ -1,0 +1,9 @@
+D:\Workspace\Farmar\.mono\temp\bin\Debug\Farmar.deps.json
+D:\Workspace\Farmar\.mono\temp\bin\Debug\Farmar.dll
+D:\Workspace\Farmar\.mono\temp\bin\Debug\Farmar.pdb
+D:\Workspace\Farmar\.mono\temp\obj\Debug\Farmar.csprojAssemblyReference.cache
+D:\Workspace\Farmar\.mono\temp\obj\Debug\Farmar.AssemblyInfoInputs.cache
+D:\Workspace\Farmar\.mono\temp\obj\Debug\Farmar.AssemblyInfo.cs
+D:\Workspace\Farmar\.mono\temp\obj\Debug\Farmar.csproj.CoreCompileInputs.cache
+D:\Workspace\Farmar\.mono\temp\obj\Debug\Farmar.dll
+D:\Workspace\Farmar\.mono\temp\obj\Debug\Farmar.pdb
