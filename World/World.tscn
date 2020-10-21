@@ -6,6 +6,7 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource( 3 )
+_plant = ExtResource( 1 )
 
 [node name="Ground" type="TileMap" parent="."]
 position = Vector2( -8.42797, 5.61865 )
@@ -24,6 +25,3 @@ zoom = Vector2( 0.2, 0.2 )
 
 [node name="Plant2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 8.42799, -21.3509 )
-
-[node name="Plant" parent="." instance=ExtResource( 1 )]
-position = Vector2( 8.80256, -13.6721 )
