@@ -24,3 +24,7 @@ frames = SubResource( 1 )
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2( 0, 3.85851 )
 shape = SubResource( 2 )
+
+[node name="ItemSprite" parent="." index="2"]
+visible = false
+texture = ExtResource( 4 )
