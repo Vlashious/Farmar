@@ -2,15 +2,11 @@ using Godot;
 
 namespace Farmar
 {
-    public class GroundMode : Mode
+    public class GroundMode
     {
-        public GroundMode(TileMap ground) : base(ground)
+        public static void EditGround(TileMap ground, Vector2 pos, int index = -1)
         {
-        }
-
-        public override void EditGround(Vector2 pos, int index)
-        {
-            _ground.SetCellv(_ground.WorldToMap(pos), index);
+            ground.SetCellv(ground.WorldToMap(pos), index);
         }
     }
 }

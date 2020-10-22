@@ -2,20 +2,14 @@ using Godot;
 
 namespace Farmar
 {
-    class PlantMode : Mode
+    class PlantMode
     {
-        private PackedScene _plant;
-        public PlantMode(TileMap ground, PackedScene plant) : base(ground)
+        public static void Plant(TileMap ground, Vector2 pos, PackedScene plant)
         {
-            _plant = plant;
-        }
-
-        public override void EditGround(Vector2 pos, int index = -1)
-        {
-            var newPlant = _plant.Instance() as Plant;
-            var plantPos = _ground.MapToWorld(_ground.WorldToMap(pos));
+            var newPlant = plant.Instance() as Plant;
+            var plantPos = ground.MapToWorld(ground.WorldToMap(pos));
             newPlant.Position = plantPos;
-            _ground.GetParent().AddChild(newPlant);
+            ground.GetParent().AddChild(newPlant);
         }
     }
 }
