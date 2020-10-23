@@ -34,6 +34,16 @@ margin_bottom = 40.0
 size_flags_horizontal = 0
 text = "SHOP"
 
+[node name="MoneyLabel" type="Label" parent="VBoxContainer"]
+margin_left = 91.0
+margin_right = 115.0
+margin_bottom = 40.0
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "100"
+align = 1
+valign = 1
+
 [node name="InventoryList" type="ItemList" parent="."]
 visible = false
 anchor_left = 0.5
