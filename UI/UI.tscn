@@ -1,16 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://UI/UI.cs" type="Script" id=1]
-[ext_resource path="res://Assets/plants/daisy_3.png" type="Texture" id=2]
-[ext_resource path="res://Assets/plants/devil_3.png" type="Texture" id=3]
-[ext_resource path="res://Assets/plants/violet_3.png" type="Texture" id=4]
+[ext_resource path="res://UI/ItemContainer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/ShopUI.tscn" type="PackedScene" id=3]
 
 [node name="UI" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -640.0
+margin_top = -360.0
+margin_right = 640.0
+margin_bottom = 360.0
 mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -36,46 +42,36 @@ text = "SHOP"
 
 [node name="MoneyLabel" type="Label" parent="VBoxContainer"]
 margin_left = 91.0
-margin_right = 115.0
+margin_right = 99.0
 margin_bottom = 40.0
 size_flags_horizontal = 0
 size_flags_vertical = 1
-text = "100"
+text = "0"
 align = 1
 valign = 1
 
-[node name="InventoryList" type="ItemList" parent="."]
+[node name="Inventory" type="Panel" parent="."]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -430.0
-margin_top = -266.0
-margin_right = 429.0
-margin_bottom = 267.0
-auto_height = true
-max_columns = 8
-same_column_width = true
-icon_mode = 0
-fixed_icon_size = Vector2( 32, 32 )
+margin_left = -373.0
+margin_top = -216.0
+margin_right = 373.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 512, 256 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ShopList" type="ItemList" parent="."]
+[node name="Items" parent="Inventory" instance=ExtResource( 2 )]
+
+[node name="ShopUI" parent="." instance=ExtResource( 3 )]
 visible = false
 anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -63.0
-rect_min_size = Vector2( 0, 32 )
-items = [ "Daisy", ExtResource( 2 ), false, "Violet", ExtResource( 4 ), false, "Devil", ExtResource( 3 ), false ]
-auto_height = true
-max_columns = 4
-same_column_width = true
-icon_mode = 0
-fixed_icon_size = Vector2( 32, 32 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+anchor_right = 0.0
+margin_top = -95.0
+margin_right = 1280.0
+margin_bottom = 1.0
+rect_min_size = Vector2( 64, 64 )

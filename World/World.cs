@@ -35,7 +35,7 @@ public class World : Node2D
         if (@event.IsActionPressed("lclick") && _state == STATE.PlantEditing)
         {
             PackedScene plant = GD.Load(_pathToPlant) as PackedScene;
-            PlantMode.Plant(_ground, mouse, plant)?.Connect("PlantGathered", _ui, "OnPlantGathered");
+            PlantMode.Plant(_ground, mouse, plant)?.Connect("PlantGathered", _ui, "OnItemGathered");
         }
         if (@event.IsActionPressed("rclick") && _state == STATE.PlantEditing)
         {

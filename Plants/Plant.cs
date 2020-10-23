@@ -3,7 +3,7 @@ using System;
 
 public class Plant : Node2D
 {
-    [Signal] private delegate void PlantGathered(Plant plant);
+    [Signal] private delegate void PlantGathered(string scene);
     private AnimatedSprite _animSprite;
     private Sprite _sprite;
     private bool _isGrown = false;
@@ -26,7 +26,7 @@ public class Plant : Node2D
     {
         if (inputEvent.IsActionPressed("rclick") && _isGrown)
         {
-            EmitSignal("PlantGathered", this);
+            EmitSignal("PlantGathered", this.Filename);
             QueueFree();
         }
     }
