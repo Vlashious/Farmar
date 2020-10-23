@@ -3,15 +3,18 @@ using System;
 
 public class Plant : Node2D
 {
-    private AnimatedSprite _sprite;
+    [Signal] private delegate void PlantGathered(Plant plant);
+    private AnimatedSprite _animSprite;
+    private Sprite _sprite;
     private bool _isGrown = false;
     public override void _Ready()
     {
-        _sprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        _animSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        _sprite = GetNode<Sprite>("ItemSprite");
         GetNode<Area2D>("Area2D").Connect("input_event", this, "OnClick");
 
-        _sprite.Play("default");
-        _sprite.Connect("animation_finished", this, "Grown");
+        _animSprite.Play("default");
+        _animSprite.Connect("animation_finished", this, "Grown");
     }
 
     private void Grown()
@@ -21,6 +24,10 @@ public class Plant : Node2D
 
     private void OnClick(Node viewport, InputEvent inputEvent, int shapeIdx)
     {
-        if (inputEvent.IsActionPressed("rclick") && _isGrown) QueueFree();
+        if (inputEvent.IsActionPressed("rclick") && _isGrown)
+        {
+            EmitSignal("PlantGathered", this);
+            QueueFree();
+        }
     }
 }

@@ -14,3 +14,4 @@ offset = Vector2( 0, -8 )
 polygon = PoolVector2Array( 8, 0, 0, 4, -8, 0, 0, -4 )
 
 [node name="ItemSprite" type="Sprite" parent="."]
+visible = false

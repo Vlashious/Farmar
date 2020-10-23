@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 public class UI : Control
 {
-    [Signal] private delegate void PlantSelected(string pathToScene);
-    public static ItemList List { get; private set; }
+    [Signal] private delegate void ItemSelected(string pathToScene);
+    public static ItemList InvList { get; private set; }
+    public static ItemList ShopList { get; private set; }
     private List<string> _items = new List<string>()
     {
         "res://Plants/Daisy.tscn",
@@ -14,22 +15,35 @@ public class UI : Control
     };
     public override void _Ready()
     {
-        List = GetNode<ItemList>("VBoxContainer/ItemList");
+        InvList = GetNode<ItemList>("InventoryList");
+        ShopList = GetNode<ItemList>("ShopList");
 
-        List.Connect("item_selected", this, "OnItemSelected");
+        GetNode<Button>("VBoxContainer/InventoryButton").Connect("pressed", this, "OnInvPressed");
+        GetNode<Button>("VBoxContainer/ShopButton").Connect("pressed", this, "OnShopPressed");
 
-        List.FixedIconSize = new Vector2(64, 64);
-        List.MaxColumns = 9;
-        foreach (var itemPath in _items)
-        {
-            var item = GD.Load<PackedScene>(itemPath).Instance() as Plant;
-            List.AddIconItem(item.GetNode<Sprite>("ItemSprite").Texture);
-        }
+        ShopList.Connect("item_selected", this, "OnItemSelected");
     }
 
     private void OnItemSelected(int id)
     {
         GD.Print(_items[id]);
-        EmitSignal("PlantSelected", _items[id]);
+        EmitSignal("ItemSelected", _items[id]);
+    }
+
+    private void OnPlantGathered(Plant plant)
+    {
+        InvList.AddItem(plant.Name, plant.GetNode<Sprite>("ItemSprite").Texture, false);
+    }
+
+    private void OnInvPressed()
+    {
+        if (InvList.Visible) InvList.Hide();
+        else InvList.Show();
+    }
+
+    private void OnShopPressed()
+    {
+        if (ShopList.Visible) ShopList.Hide();
+        else ShopList.Show();
     }
 }

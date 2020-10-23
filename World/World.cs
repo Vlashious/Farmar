@@ -17,7 +17,7 @@ public class World : Node2D
     {
         _ground = GetNode<TileMap>("Ground");
         _ui = GetNode<UI>("CanvasLayer/UI");
-        _ui.Connect("PlantSelected", this, "OnPlantSelected");
+        _ui.Connect("ItemSelected", this, "OnPlantSelected");
         _state = STATE.PlantEditing;
     }
 
@@ -35,7 +35,7 @@ public class World : Node2D
         if (@event.IsActionPressed("lclick") && _state == STATE.PlantEditing)
         {
             PackedScene plant = GD.Load(_pathToPlant) as PackedScene;
-            PlantMode.Plant(_ground, mouse, plant);
+            PlantMode.Plant(_ground, mouse, plant)?.Connect("PlantGathered", _ui, "OnPlantGathered");
         }
         if (@event.IsActionPressed("rclick") && _state == STATE.PlantEditing)
         {
