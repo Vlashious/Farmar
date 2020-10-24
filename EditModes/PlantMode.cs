@@ -13,7 +13,6 @@ namespace Farmar
                 plantPos.y += 4;
                 newPlant.Position = plantPos;
                 ground.GetParent().AddChild(newPlant);
-                GD.Print("New plant added");
                 return newPlant;
             }
             else GD.Print("No ground beneath!");

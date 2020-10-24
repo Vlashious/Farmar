@@ -3,8 +3,11 @@ using System;
 
 public class ItemTile : VBoxContainer
 {
+    [Signal] private delegate void ItemSold(string scene, int amount);
     public PackedScene Scene { get; set; }
-    private int _count = 0;
+    [Export] private Texture _emptyTileTexture;
+    private TextureRect _textRect;
+    private int _count;
     public int Count
     {
         get
@@ -15,13 +18,25 @@ public class ItemTile : VBoxContainer
         {
             _count = value;
             GetNode<Label>("Count").Text = _count.ToString();
+            if (_count <= 1) GetNode<Label>("Count").Text = "";
         }
     }
     public bool IsEmpty { get; private set; } = true;
     public override void _Ready()
     {
-        GetNode<TextureRect>("CenterContainer/TextureRect").Connect("gui_input", this, "OnInput");
+        Count = 0;
+        _textRect = GetNode<TextureRect>("CenterContainer/TextureRect");
+        _textRect.Connect("gui_input", this, "OnInput");
+        ResetTile();
         Connect("gui_input", this, "OnInput");
+    }
+
+    private void ResetTile()
+    {
+        Count = 0;
+        Scene = null;
+        _textRect.Texture = _emptyTileTexture;
+        IsEmpty = true;
     }
 
     public void SetTile(PackedScene scene)
@@ -32,16 +47,17 @@ public class ItemTile : VBoxContainer
             return;
         }
         var texture = Scene.Instance().GetNode<Sprite>("ItemSprite").Texture;
-        GetNode<TextureRect>("CenterContainer/TextureRect").Texture = texture;
+        _textRect.Texture = texture;
         IsEmpty = false;
         Count++;
     }
 
     private void OnInput(InputEvent @event)
     {
-        if (@event.IsActionPressed("lclick") && @event is InputEventMouse e)
+        if (@event.IsActionPressed("lclick") && !IsEmpty && @event is InputEventMouseButton e && e.Doubleclick)
         {
-            GD.Print("Has been clicked!");
+            EmitSignal("ItemSold", Scene.ResourcePath, Count);
+            ResetTile();
         }
     }
 

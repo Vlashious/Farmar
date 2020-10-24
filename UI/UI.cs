@@ -16,11 +16,19 @@ public class UI : Control
         _shop.Connect("ItemSelected", this, "OnItemSelected");
         GetNode<Button>("VBoxContainer/InventoryButton").Connect("pressed", this, "OnInvPressed");
         GetNode<Button>("VBoxContainer/ShopButton").Connect("pressed", this, "OnShopPressed");
+        SubscribeTiles();
+    }
+
+    private void SubscribeTiles()
+    {
+        foreach (ItemTile tile in _inv.GetNode<GridContainer>("Items").GetChildren())
+        {
+            tile.Connect("ItemSold", this, "OnItemSold");
+        }
     }
 
     private void OnItemSelected(string pathToScene)
     {
-        GD.Print(pathToScene);
         EmitSignal("ItemSelected", pathToScene);
     }
 
@@ -30,7 +38,6 @@ public class UI : Control
         {
             if (tile.Scene?.ResourcePath == itemScene)
             {
-                GD.Print("heh");
                 tile.SetTile(tile.Scene);
                 return;
             }
@@ -43,6 +50,11 @@ public class UI : Control
         }
     }
 
+    private void OnItemSold(string path, int amount)
+    {
+        GD.Print($"Sold {amount} items {path}.");
+    }
+
     private void OnInvPressed()
     {
         if (_inv.Visible) _inv.Hide();
@@ -51,7 +63,11 @@ public class UI : Control
 
     private void OnShopPressed()
     {
-        if (_shop.Visible) _shop.Hide();
+        if (_shop.Visible)
+        {
+            _shop.Hide();
+            EmitSignal("ItemSelected", "");
+        }
         else _shop.Show();
     }
 }
