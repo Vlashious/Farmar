@@ -27,9 +27,9 @@ public class UI : Control
         }
     }
 
-    private void OnItemSelected(string pathToScene)
+    private void OnItemSelected(string pathToScene, int cost)
     {
-        EmitSignal("ItemSelected", pathToScene);
+        EmitSignal("ItemSelected", pathToScene, cost);
     }
 
     private void OnItemGathered(string itemScene)

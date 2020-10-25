@@ -25,7 +25,7 @@ public class ItemTile : VBoxContainer
     public override void _Ready()
     {
         Count = 0;
-        _textRect = GetNode<TextureRect>("CenterContainer/TextureRect");
+        _textRect = GetNode<TextureRect>("TextureRect");
         _textRect.Connect("gui_input", this, "OnInput");
         ResetTile();
         Connect("gui_input", this, "OnInput");

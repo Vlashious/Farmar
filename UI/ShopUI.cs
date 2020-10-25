@@ -5,21 +5,41 @@ using System.Collections.Generic;
 public class ShopUI : Control
 {
     [Signal] delegate void ItemSelected(string path);
-    private ItemList _itemList;
-    private List<string> _items = new List<string>()
-    {
-        "res://Plants/Daisy.tscn",
-        "res://Plants/Violet.tscn",
-        "res://Plants/Devil.tscn",
-    };
+    private TabContainer _tab;
+    private Godot.Collections.Array _plants;
+    private Godot.Collections.Array _ground;
+
     public override void _Ready()
     {
-        _itemList = GetNode<ItemList>("ItemList");
-        _itemList.Connect("item_selected", this, "OnItemSelected");
+        _plants = GetNode<GridContainer>("TabContainer/Plants").GetChildren();
+        _ground = GetNode<GridContainer>("TabContainer/Ground").GetChildren();
+        SubscribeTiles(_plants);
+        SubscribeTiles(_ground);
+
+        _tab = GetNode<TabContainer>("TabContainer");
+        _tab.Connect("tab_changed", this, "OnTabChanged");
     }
 
-    private void OnItemSelected(int id)
+    private void OnItemSelected(string scene)
     {
-        EmitSignal("ItemSelected", _items[id]);
+        EmitSignal("ItemSelected", scene);
+    }
+
+    private void SubscribeTiles(Godot.Collections.Array tiles)
+    {
+        foreach (ShopTile tile in tiles)
+        {
+            tile.Connect("TileSelected", this, "OnTileSelected");
+        }
+    }
+
+    private void OnTabChanged(int tab)
+    {
+        // TODO: Unselect mechanic.
+    }
+
+    private void OnTileSelected(string scene, int cost)
+    {
+        EmitSignal("ItemSelected", scene, cost);
     }
 }
