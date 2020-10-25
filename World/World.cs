@@ -19,8 +19,15 @@ public class World : Node2D
     {
         _ground = GetNode<TileMap>("Ground");
         _ui = GetNode<UI>("CanvasLayer/UI");
-        _ui.Connect("ItemSelected", this, "OnItemSelected");
+        SubscribeUI();
         _state = STATE.PlantRemove;
+    }
+
+    private void SubscribeUI()
+    {
+        _ui.Connect("ItemSelected", this, "OnItemSelected");
+        _ui.Connect("ShopOpened", this, "OnShopOpened");
+        _ui.Connect("ShopClosed", this, "OnShopClosed");
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -28,7 +35,7 @@ public class World : Node2D
         var mouse = GetGlobalMousePosition();
         if (@event.IsActionPressed("lclick") && _state == STATE.GroundAdd)
         {
-            GroundMode.EditGround(_ground, mouse, _index);
+            GroundMode.EditGround(_ground, mouse, _pathToItem);
         }
         if (@event.IsActionPressed("rclick") && _state == STATE.GroundRemove)
         {
@@ -46,14 +53,23 @@ public class World : Node2D
 
     private void Plant(Vector2 pos)
     {
-        PackedScene plant = GD.Load(_pathToItem) as PackedScene;
-        PlantMode.Plant(_ground, pos, plant)?.Connect("PlantGathered", _ui, "OnItemGathered");
+        PlantMode.Plant(_ground, pos, _pathToItem)?.Connect("PlantGathered", _ui, "OnItemGathered");
     }
 
     private void OnItemSelected(string path, int cost)
     {
         _pathToItem = path;
         GD.Print(cost);
+    }
+
+    private void OnShopOpened()
+    {
+        _state = STATE.GroundAdd;
+    }
+
+    private void OnShopClosed()
+    {
+        _state = STATE.PlantRemove;
     }
 
 }

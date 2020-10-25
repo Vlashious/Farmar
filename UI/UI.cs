@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class UI : Control
 {
     [Signal] private delegate void ItemSelected(string pathToScene);
-
+    [Signal] private delegate void ShopOpened();
+    [Signal] private delegate void ShopClosed();
     private Panel _inv;
     private ShopUI _shop;
     private int _money = 0;
@@ -66,8 +67,12 @@ public class UI : Control
         if (_shop.Visible)
         {
             _shop.Hide();
-            EmitSignal("ItemSelected", "");
+            EmitSignal("ShopClosed");
         }
-        else _shop.Show();
+        else
+        {
+            _shop.Show();
+            EmitSignal("ShopOpened");
+        }
     }
 }

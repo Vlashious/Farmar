@@ -4,9 +4,9 @@ namespace Farmar
 {
     public class GroundMode
     {
-        public static void EditGround(TileMap ground, Vector2 pos, int index = -1)
+        public static void EditGround(TileMap ground, Vector2 pos, string scene = null)
         {
-            ground.SetCellv(ground.WorldToMap(pos), index);
+            // TODO: implement mechanic set tile -> replace tile with actual object.
         }
     }
 }
