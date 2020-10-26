@@ -6,7 +6,8 @@ namespace Farmar
     {
         public static void EditGround(TileMap ground, Vector2 pos, string scene = null)
         {
-            // TODO: implement mechanic set tile -> replace tile with actual object.
+            int id = scene == null ? -1 : SceneMapper.Ground[scene];
+            ground.SetCellv(ground.WorldToMap(pos), id);
         }
     }
 }

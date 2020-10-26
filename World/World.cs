@@ -28,12 +28,13 @@ public class World : Node2D
         _ui.Connect("ItemSelected", this, "OnItemSelected");
         _ui.Connect("ShopOpened", this, "OnShopOpened");
         _ui.Connect("ShopClosed", this, "OnShopClosed");
+        _ui.Connect("TabChanged", this, "OnTabChanged");
     }
 
     public override void _UnhandledInput(InputEvent @event)
     {
         var mouse = GetGlobalMousePosition();
-        if (@event.IsActionPressed("lclick") && _state == STATE.GroundAdd)
+        if (@event.IsActionPressed("lclick") && _state == STATE.GroundAdd && _pathToItem != null)
         {
             GroundMode.EditGround(_ground, mouse, _pathToItem);
         }
@@ -70,6 +71,19 @@ public class World : Node2D
     private void OnShopClosed()
     {
         _state = STATE.PlantRemove;
+    }
+
+    private void OnTabChanged(string name)
+    {
+        switch (name)
+        {
+            case "Ground":
+                _state = STATE.GroundAdd;
+                break;
+            case "Plants":
+                _state = STATE.PlantAdd;
+                break;
+        }
     }
 
 }

@@ -7,6 +7,7 @@ public class UI : Control
     [Signal] private delegate void ItemSelected(string pathToScene);
     [Signal] private delegate void ShopOpened();
     [Signal] private delegate void ShopClosed();
+    [Signal] private delegate void TabChanged(string name);
     private Panel _inv;
     private ShopUI _shop;
     private int _money = 0;
@@ -15,6 +16,7 @@ public class UI : Control
         _inv = GetNode<Panel>("Inventory");
         _shop = GetNode<ShopUI>("ShopUI");
         _shop.Connect("ItemSelected", this, "OnItemSelected");
+        _shop.Connect("TabChanged", this, "OnTabChanged");
         GetNode<Button>("VBoxContainer/InventoryButton").Connect("pressed", this, "OnInvPressed");
         GetNode<Button>("VBoxContainer/ShopButton").Connect("pressed", this, "OnShopPressed");
         SubscribeTiles();
@@ -74,5 +76,10 @@ public class UI : Control
             _shop.Show();
             EmitSignal("ShopOpened");
         }
+    }
+
+    private void OnTabChanged(string name)
+    {
+        EmitSignal("TabChanged", name);
     }
 }

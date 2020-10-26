@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class ShopUI : Control
 {
     [Signal] delegate void ItemSelected(string path);
+    [Signal] delegate void TabChanged(string name);
     private TabContainer _tab;
     private Godot.Collections.Array _plants;
     private Godot.Collections.Array _ground;
@@ -35,7 +36,8 @@ public class ShopUI : Control
 
     private void OnTabChanged(int tab)
     {
-        // TODO: Unselect mechanic.
+        var name = _tab.GetChild(tab).Name;
+        EmitSignal("TabChanged", name);
     }
 
     private void OnTileSelected(string scene, int cost)
