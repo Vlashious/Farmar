@@ -3,19 +3,21 @@ using System;
 
 public class Camera2D : Godot.Camera2D
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
-
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    public override void _UnhandledInput(InputEvent @event)
     {
-        
-    }
+        var mouseCaptured = false;
+        if (@event is InputEventMouseButton e)
+        {
+            if (e.IsActionPressed("zoom_in")) Zoom /= 1 + 0.05f;
+            if (e.IsActionPressed("zoom_out")) Zoom *= 1 + 0.05f;
+        }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+        if (Input.IsActionPressed("view_pan")) mouseCaptured = true;
+        else mouseCaptured = false;
+
+        if (mouseCaptured && @event is InputEventMouseMotion ev)
+        {
+            Position -= ev.Relative * Zoom;
+        }
+    }
 }
